@@ -1,0 +1,49 @@
+# System plików operacyjnych
+.DS_Store
+Thumbs.db
+
+# Pliki i foldery lokalnego środowiska
+.idea/
+*.iml
+.gradle/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Katalogi specyficzne dla Android Studio
+build/
+app/build/
+navigation.xml
+
+# Pliki logów i crashy
+*.log
+crashlytics.properties
+fabric.properties
+
+# Pliki specyficzne dla systemów operacyjnych
+*.swp
+*.swo
+*.bak
+
+# Pliki specyficzne dla Androida
+*.apk
+*.ap_
+
+# Pliki specyficzne dla debugowania i testów
+*.hprof
+*.stacktrace
+*.proffile
+*.idx
+*.trace
+*.rawproto
+
+# Pliki generowane przez systemy kontroli wersji
+.git/
+
+# Pliki tymczasowe IDE i systemu operacyjnego
+*.tmp
+*.temp
+*.~*
+*.idb
+*.pyc
