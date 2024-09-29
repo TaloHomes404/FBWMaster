@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_screen_bg">#434343</color>
     <color name="main_card_bg">#FBF9F2</color>
+    <color name="textfield_main_bg">#F3F3F3</color>
 </resources>

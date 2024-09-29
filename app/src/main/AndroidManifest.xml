@@ -13,6 +13,21 @@
         android:theme="@style/Theme.FBWMaster"
         tools:targetApi="31">
         <activity
+            android:name=".comps.ToolsScreen"
+            android:exported="false"
+            android:label="@string/title_activity_tools_screen"
+            android:theme="@style/Theme.FBWMaster" />
+        <activity
+            android:name=".comps.MainScreen"
+            android:exported="false"
+            android:label="@string/title_activity_main_screen"
+            android:theme="@style/Theme.FBWMaster" />
+        <activity
+            android:name=".comps.GreetingScreen"
+            android:exported="false"
+            android:label="@string/title_activity_greeting_screen"
+            android:theme="@style/Theme.FBWMaster" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
@@ -23,6 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

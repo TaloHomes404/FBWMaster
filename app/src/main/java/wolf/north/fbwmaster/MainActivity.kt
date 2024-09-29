@@ -44,7 +44,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,6 +70,21 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun EntryScreen(modifier: Modifier = Modifier) {
+
+
+    val provider = GoogleFont.Provider(
+        providerAuthority = "com.google.android.gms.fonts",
+        providerPackage = "com.google.android.gms",
+        certificates = R.array.com_google_android_gms_fonts_certs
+    )
+
+    val customFont = GoogleFont("Roboto")
+
+    val fontFamily = FontFamily(
+        Font(googleFont = customFont, fontProvider = provider)
+    )
+
+
     // Lista zdjęć
     val images = listOf(
         R.drawable.first_mainscreen_img,
@@ -132,12 +151,12 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             // Trzy kulki
             DotsIndicator(selectedIndex = currentSlide, numberOfDots = images.size)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Tytuł
             Text(
@@ -146,6 +165,7 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 textAlign = TextAlign.Center,
+                fontFamily = fontFamily,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
@@ -156,6 +176,7 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                 text = descriptions[currentSlide],
                 fontSize = 18.sp,
                 color = Color.Gray,
+                fontFamily = fontFamily,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -182,7 +203,8 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                         text = "Start now",
                         color = Color.White,
                         fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamily,
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Icon(
@@ -193,10 +215,11 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(36.dp))
         }
     }
 }
+
 @Composable
 fun DotsIndicator(selectedIndex: Int, numberOfDots: Int) {
     Row(

@@ -6,4 +6,7 @@
     <string name="second_slide_description">FBWMaster is the ultimate tool for anyone looking to improve their fitness. It doesn’t matter if you’re just starting out or if you’ve been working out for years\n\n—FBWMaster adapts to your needs, providing effective way to improve your training.</string>
     <string name="third_slide_title">Your Fitness Journey, Simplified and Mobile</string>
     <string name="third_slide_description">With FBWMaster, your fitness app is always within reach. Designed to support everyone from beginners to experts, offering an array of features that make working out accessible and effective.\n Carry your personalized workout plan in your pocket, track your achievements, and make progress.</string>
+    <string name="title_activity_greeting_screen">GreetingScreen</string>
+    <string name="title_activity_main_screen">MainScreen</string>
+    <string name="title_activity_tools_screen">ToolsScreen</string>
 </resources>
