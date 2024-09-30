@@ -9,4 +9,5 @@
     <string name="title_activity_greeting_screen">GreetingScreen</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="title_activity_tools_screen">ToolsScreen</string>
+    <string name="title_activity_plans_list_screen">PlansListScreen</string>
 </resources>
