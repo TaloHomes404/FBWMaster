@@ -13,6 +13,21 @@
         android:theme="@style/Theme.FBWMaster"
         tools:targetApi="31">
         <activity
+            android:name=".data.CurrentData"
+            android:exported="false"
+            android:label="@string/title_activity_current_data"
+            android:theme="@style/Theme.FBWMaster" />
+        <activity
+            android:name=".comps.ExercisesList"
+            android:exported="false"
+            android:label="@string/title_activity_exercises_list"
+            android:theme="@style/Theme.FBWMaster" />
+        <activity
+            android:name=".comps.PlansListScreen"
+            android:exported="false"
+            android:label="@string/title_activity_plans_list_screen"
+            android:theme="@style/Theme.FBWMaster" />
+        <activity
             android:name=".comps.ToolsScreen"
             android:exported="false"
             android:label="@string/title_activity_tools_screen"

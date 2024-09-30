@@ -1,5 +1,6 @@
 package wolf.north.fbwmaster.comps
 
+import CurrentData
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Female
+import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Male
 import androidx.compose.material.icons.filled.Search
@@ -58,15 +60,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import wolf.north.fbwmaster.R
 import wolf.north.fbwmaster.comps.ui.theme.FBWMasterTheme
+import wolf.north.fbwmaster.navigation.NavigationComponent
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ToolsScreen() {
+fun ToolsScreen(navController: NavController) {
     // Stan rozwijania/zwijania dla każdego elementu listy
     var isBmiCalculatorVisible by remember { mutableStateOf(false) }
     var isOtherToolVisible by remember { mutableStateOf(false) }
+
 
     Scaffold(
         topBar = {
@@ -74,10 +80,7 @@ fun ToolsScreen() {
                 TopAppBar(
                     title = {
                         Column {
-                            Text(
-                                text = "Thu, 3 Aug",
-                                color = Color.Black
-                            )
+                            CurrentData()
                             Text(
                                 text = "W3 D6 • Fit Fusion",
                                 color = Color.Gray
@@ -167,28 +170,32 @@ fun ToolsScreen() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    IconButton(onClick = { /* Akcja dla pierwszej ikony */ }) {
+                    IconButton(onClick = { navController.navigate("mainScreen") }) {
                         Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = "Home"
+                            imageVector = Icons.Default.Home, // Zmień na dowolną ikonę
+                            contentDescription = "Home",
+                            tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { /* Akcja dla drugiej ikony */ }) {
+                    IconButton(onClick = { navController.navigate("plansListScreen")}) {
                         Icon(
-                            imageVector = Icons.Default.Favorite,
-                            contentDescription = "Favorite"
+                            imageVector = Icons.Default.FormatListNumbered, // Zmień na dowolną ikonę
+                            contentDescription = "Exercises list bottom bar",
+                            tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { /* Akcja dla trzeciej ikony */ }) {
+                    IconButton(onClick = { navController.navigate("exercisesList") }) {
                         Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search"
+                            imageVector = Icons.Default.Search, // Zmień na dowolną ikonę
+                            contentDescription = "Search",
+                            tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { /* Akcja dla czwartej ikony */ }) {
+                    IconButton(onClick = { navController.navigate("toolsScreen") }) {
                         Icon(
-                            imageVector = Icons.Default.Calculate,
-                            contentDescription = "Tools"
+                            imageVector = Icons.Default.Calculate, // Zmień na dowolną ikonę
+                            contentDescription = "Tools",
+                            tint = Color.White
                         )
                     }
                 }
@@ -233,12 +240,15 @@ fun OptionItem(
     }
 }
 
+
+
 @Composable
 fun BMICalculatorForm() {
     var age by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
     var weight by remember { mutableStateOf("") }
     var selectedGender by remember { mutableStateOf<Gender?>(null) }
+    var bmiResult by remember { mutableStateOf<Float?>(null) }
 
     Column(modifier = Modifier.padding(16.dp)) {
         // Wprowadzenie wieku
@@ -296,17 +306,68 @@ fun BMICalculatorForm() {
         // Przycisk do obliczenia BMI
         Button(
             onClick = {
-                // Logika obliczania BMI
-                val bmi = calculateBMI(height.toFloatOrNull(), weight.toFloatOrNull())
-                // Można dodać logikę wyświetlania wyniku
+                bmiResult = calculateBMI(height.toFloatOrNull(), weight.toFloatOrNull())
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Calculate BMI")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Wyświetlanie wyniku BMI
+        bmiResult?.let { bmi ->
+            Text(
+                text = "Your BMI: %.2f".format(bmi),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Tabelka BMI
+        BMIScaleTable()
     }
 }
 
+@Composable
+fun BMIScaleTable() {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "BMI Scale", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Underweight", color = Color.Gray)
+            Text(text = "< 18.5", color = Color.Gray)
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Normal weight", color = Color.Gray)
+            Text(text = "18.5 - 24.9", color = Color.Gray)
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Overweight", color = Color.Gray)
+            Text(text = "25 - 29.9", color = Color.Gray)
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Obesity", color = Color.Gray)
+            Text(text = "30+", color = Color.Gray)
+        }
+    }
+}
 @Composable
 fun GenderButton(gender: Gender, isSelected: Boolean, onClick: () -> Unit) {
     Row(
@@ -343,8 +404,9 @@ fun calculateBMI(height: Float?, weight: Float?): Float? {
     return weight / ((height / 100) * (height / 100))
 }
 
+
 @Preview(showSystemUi = true)
 @Composable
 private fun ToolsScreenPreview() {
-    ToolsScreen()
+    ToolsScreen(navController = rememberNavController())
 }

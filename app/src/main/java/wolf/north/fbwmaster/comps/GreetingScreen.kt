@@ -41,11 +41,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import wolf.north.fbwmaster.R
+import wolf.north.fbwmaster.navigation.NavigationComponent
 
 
 @Composable
-fun GreetingScreen() {
+fun GreetingScreen(navController: NavController) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -138,7 +142,7 @@ fun GreetingScreen() {
 
         // Sign Up Button
         Button(
-            onClick = { /* Action */ },
+            onClick = { navController.navigate("mainScreen") },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -210,5 +214,5 @@ fun GreetingScreen() {
 @Preview(showSystemUi = true)
 @Composable
 private fun GreetingScreenPreview() {
-    GreetingScreen()
+    GreetingScreen(navController = rememberNavController())
 }

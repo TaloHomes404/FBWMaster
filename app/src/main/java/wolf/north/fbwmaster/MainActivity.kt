@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,6 +30,7 @@ import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,7 +55,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
+import wolf.north.fbwmaster.navigation.NavigationComponent
 import wolf.north.fbwmaster.ui.theme.FBWMasterTheme
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +68,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             FBWMasterTheme {
                 // A surface container using the 'background' color from the theme
+                Surface {
+                    NavigationComponent()
+                }
 
             }
         }
@@ -69,8 +78,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun EntryScreen(modifier: Modifier = Modifier) {
-
+fun EntryScreen(modifier: Modifier = Modifier, navController: NavController) {
 
     val provider = GoogleFont.Provider(
         providerAuthority = "com.google.android.gms.fonts",
@@ -121,7 +129,6 @@ fun EntryScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .background(colorResource(R.color.main_screen_bg))
     ) {
-        Spacer(modifier = Modifier.weight(1f))
 
         // Crossfade dla obrazka
         Crossfade(
@@ -133,9 +140,9 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                 contentDescription = "Welcome Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(370.dp)
+                    .height(320.dp)
                     .align(Alignment.End)
-                    .offset(y = 25.dp),
+                    .offset(y = 10.dp),
                 contentScale = ContentScale.Fit
             )
         }
@@ -144,11 +151,12 @@ fun EntryScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(400.dp) // Zwiększ wysokość karty
                 .background(
                     color = colorResource(R.color.main_card_bg),
                     shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
                 )
-                .padding(24.dp),
+                .padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(4.dp))
@@ -180,19 +188,17 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .align(Alignment.CenterHorizontally),
+                    .align(Alignment.CenterHorizontally)
+                    .weight(1f), // Użyj weight, aby tekst zajmował dostępną przestrzeń
                 lineHeight = 20.sp
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(12.dp)) // Dodaj przestrzeń
 
             Button(
-                onClick = { /* Action */ },
+                onClick = { navController.navigate("greetingScreen") },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.black)),
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier
-                    .wrapContentWidth(Alignment.CenterHorizontally)
-                    .height(50.dp)
+                shape = RoundedCornerShape(10.dp)
             ) {
                 Row(
                     modifier = Modifier.wrapContentWidth(),
@@ -215,7 +221,6 @@ fun EntryScreen(modifier: Modifier = Modifier) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(36.dp))
         }
     }
 }
@@ -244,5 +249,5 @@ fun DotsIndicator(selectedIndex: Int, numberOfDots: Int) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewEntryScreen() {
-    EntryScreen()
+    EntryScreen(navController = rememberNavController())
 }
