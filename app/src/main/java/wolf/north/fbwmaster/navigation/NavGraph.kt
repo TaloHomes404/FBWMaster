@@ -25,7 +25,12 @@ fun NavigationComponent(startDestination: String = "startScreen") {
         composable("plansListScreen") { PlansListScreen(navController) }
         composable("exercisesList") { ExercisesListScreen(navController) }
         composable("toolsScreen") { ToolsScreen(navController) }
-
+        composable("mainScreen/{planName}/{duration}/{imageResId}") { backStackEntry ->
+            val planName = backStackEntry.arguments?.getString("planName")
+            val duration = backStackEntry.arguments?.getString("duration")
+            val imageResId = backStackEntry.arguments?.getString("imageResId")?.toInt()
+            MainScreen(navController, planName, duration, imageResId)
+        }
 
     }
 }

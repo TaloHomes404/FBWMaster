@@ -53,6 +53,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -75,7 +76,7 @@ fun PlansListScreen(navController: NavController) {
                         Column {
                             CurrentData()
                             Text(
-                                text = "W3 D6 • Fit Fusion",
+                                text = stringResource(R.string.w1_d1_beginner),
                                 color = Color.Gray
                             )
                         }
@@ -292,7 +293,7 @@ fun PlanCard(
                             contentColor = Color.White
                         )
                     ) {
-                        Text(text = "Dodaj")
+                        Text(text = "Add")
                     }
                 }
             }

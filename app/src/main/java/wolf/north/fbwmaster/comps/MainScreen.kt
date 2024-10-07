@@ -53,6 +53,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -65,126 +66,117 @@ import wolf.north.fbwmaster.navigation.NavigationComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen(
+    navController: NavController,
+    planName: String? = null,
+    duration: String? = null,
+    imageResId: Int? = null
+) {
 
-    Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Column {
-                            CurrentData()
-                            Text(
-                                text = "W3 D6 • Fit Fusion",
-                                color = Color.Gray
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                imageVector = Icons.Filled.CalendarMonth,
-                                contentDescription = "Calendar"
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Image(
-                            painter = painterResource(id = R.drawable.randomperson), // Placeholder na zdjęcie użytkownika
-                            contentDescription = "Profile Picture",
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .background(Color.Gray)
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+    Scaffold(topBar = {
+        Column {
+            TopAppBar(title = {
+                Column {
+                    CurrentData()
+                    Text(
+                        text = stringResource(R.string.w1_d1_beginner), color = Color.Gray
+                    )
+                }
+            }, actions = {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Filled.CalendarMonth,
+                        contentDescription = "Calendar"
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.randomperson), // Placeholder na zdjęcie użytkownika
+                    contentDescription = "Profile Picture",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(Color.Gray)
                 )
-                // Dodanie cienkiej szarej kreski na końcu TopAppBar
-                Spacer(modifier = Modifier.height(4.dp))
-                Divider(
-                    modifier = Modifier.alpha(0.3f),
-                    color = Color.LightGray, // Kolor kreski
-                    thickness = 2.dp // Grubość kreski
-                )
-            }
-        },
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
-                    .padding(paddingValues) // Tło strony
-                    .padding(16.dp)
+                Spacer(modifier = Modifier.width(16.dp))
+            }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+            )
+            // Dodanie cienkiej szarej kreski na końcu TopAppBar
+            Spacer(modifier = Modifier.height(4.dp))
+            Divider(
+                modifier = Modifier.alpha(0.3f), color = Color.LightGray, // Kolor kreski
+                thickness = 2.dp // Grubość kreski
+            )
+        }
+    }, content = { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(paddingValues) // Tło strony
+                .padding(16.dp)
+        ) {
+            // Nagłówek sekcji "Workouts"
+            Text(
+                text = "Workouts",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 1.sp,
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Karta
+            WorkoutCard(
+                imageResId = imageResId ?: R.drawable.arms_fbw1, // Zdjęcie treningu
+                title = planName ?: "Full Body Mobility Routine",
+                duration =  duration ?: "36 mins"
+            )
+        }
+    }, bottomBar = {
+        BottomAppBar(
+            containerColor = Color.Black, // Ustawienie czarnego tła BottomBar
+            contentColor = Color.White // Kolor ikon
+        ) {
+            // Równomierne rozłożenie ikon w BottomBar
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly // Równomierne rozmieszczenie ikon
             ) {
-                // Nagłówek sekcji "Workouts"
-                Text(
-                    text = "Workouts",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.sp,
-                    color = Color.Black
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Karta
-                WorkoutCard(
-                    imageResId = R.drawable.arms_fbw1, // Zdjęcie treningu
-                    title = "Full Body Mobility Routine",
-                    duration = "36 mins"
-                )
-            }
-        },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = Color.Black, // Ustawienie czarnego tła BottomBar
-                contentColor = Color.White // Kolor ikon
-            ) {
-                // Równomierne rozłożenie ikon w BottomBar
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly // Równomierne rozmieszczenie ikon
-                ) {
-                    IconButton(onClick = { navController.navigate("mainScreen") }) {
-                        Icon(
-                            imageVector = Icons.Default.Home, // Zmień na dowolną ikonę
-                            contentDescription = "Home",
-                            tint = Color.White
-                        )
-                    }
-                    IconButton(onClick = { navController.navigate("plansListScreen") }) {
-                        Icon(
-                            imageVector = Icons.Default.FormatListNumbered, // Zmień na dowolną ikonę
-                            contentDescription = "Exercises list bottom bar",
-                            tint = Color.Gray
-                        )
-                    }
-                    IconButton(onClick = { navController.navigate("exercisesList") }) {
-                        Icon(
-                            imageVector = Icons.Default.Search, // Zmień na dowolną ikonę
-                            contentDescription = "Search",
-                            tint = Color.Gray
-                        )
-                    }
-                    IconButton(onClick = { navController.navigate("toolsScreen") }) {
-                        Icon(
-                            imageVector = Icons.Default.Calculate, // Zmień na dowolną ikonę
-                            contentDescription = "Tools",
-                            tint = Color.Gray
-                        )
-                    }
+                IconButton(onClick = { navController.navigate("mainScreen") }) {
+                    Icon(
+                        imageVector = Icons.Default.Home, // Zmień na dowolną ikonę
+                        contentDescription = "Home", tint = Color.White
+                    )
+                }
+                IconButton(onClick = { navController.navigate("plansListScreen") }) {
+                    Icon(
+                        imageVector = Icons.Default.FormatListNumbered, // Zmień na dowolną ikonę
+                        contentDescription = "Exercises list bottom bar", tint = Color.Gray
+                    )
+                }
+                IconButton(onClick = { navController.navigate("exercisesList") }) {
+                    Icon(
+                        imageVector = Icons.Default.Search, // Zmień na dowolną ikonę
+                        contentDescription = "Search", tint = Color.Gray
+                    )
+                }
+                IconButton(onClick = { navController.navigate("toolsScreen") }) {
+                    Icon(
+                        imageVector = Icons.Default.Calculate, // Zmień na dowolną ikonę
+                        contentDescription = "Tools", tint = Color.Gray
+                    )
                 }
             }
         }
-    )
+    })
 }
 
 @Composable
 fun WorkoutCard(imageResId: Int, title: String, duration: String) {
     Card(
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth()
+        shape = RoundedCornerShape(16.dp), modifier = Modifier.fillMaxWidth()
     ) {
         Box {
             // Tło ze zdjęciem

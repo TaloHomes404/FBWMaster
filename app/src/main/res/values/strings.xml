@@ -12,4 +12,5 @@
     <string name="title_activity_plans_list_screen">PlansListScreen</string>
     <string name="title_activity_exercises_list">ExercisesList</string>
     <string name="title_activity_current_data">CurrentData</string>
+    <string name="w1_d1_beginner">W1 D1 • Beginner</string>
 </resources>
